@@ -131,7 +131,7 @@ center = (bins[:-1] + bins[1:])
 
 # Debug: print(center)
 
-center = center *0.5
+center = center * 0.5
 
 # Debug: print(center)
 # Debug: print(type(center))
@@ -401,7 +401,7 @@ fix , axes = plt.subplots(1,2,figsize = (15,10))
 fig.tight_layout()
 
 print("The Image Size is ",original_image.shape)
-
+print(preprocessed_image)
 axes[0].imshow(original_image)
 axes[0].set_title("Original Image")
 
@@ -470,7 +470,7 @@ plt.show()
 # plt.imshow(X_train[random.randint(0,len(X_train)-1)])
 # plt.show()
 
-# print(X_train.shape)# x is 200 heigh is 66  but in array shape it shows [0] [200] , [1] [200]
+print(X_train[0])# x is 200 heigh is 66  but in array shape it shows [0] [200] , [1] [200]
 
 
 
@@ -514,7 +514,7 @@ def nvidia_model():
 
   # optimizer = Adam(learning_rate = 1e-3) Test
   optimizer = Adam(learning_rate = 1e-4)
-  model.compile(loss='mse',optimizer =optimizer, metrics = ['accuracy'])# , metrics = ['accuracy']
+  model.compile(loss='mse',optimizer =optimizer)# , metrics = ['accuracy']
   return model
 
 model = nvidia_model()

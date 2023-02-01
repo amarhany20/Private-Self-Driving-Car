@@ -33,7 +33,7 @@ import time
 sio = socketio.Server()
 app = Flask(__name__)
 
-speed_limit = 25
+speed_limit = 35
 counter = 0
 start = time.time()
 
@@ -58,30 +58,31 @@ def telemtery(sid, data):
     # Debug: print("Image: " ,data['image'])
     # Debug: print("Type: ", type(data['image']))
     # Debug: print("Time Elabsed in this function : ",(time.time() - start)*1000)
-    # Debug: plt.imshow(image[0])
-    # Debug: plt.show(block=False)
-    # Debug: plt.close()
+    # plt.imshow(image[0])
+    # plt.show(block=False)
+    # plt.close()
+    # image = Image.open(BytesIO(base64.b64decode(data['image'])))
+    # image = np.asarray(image)
+    # image = img_preprocess(image)
+    # image = np.array([image])
+    # Debug : Count()
+    # send_control(0,1)
+    # steering_angle = (float(model.predict(image)) + float(model2.predict(image)))/2
     speed = float(data['speed'])
     image = Image.open(BytesIO(base64.b64decode(data['image'])))
     image = np.asarray(image)
     image = img_preprocess(image)
     image = np.array([image])
-    image = Image.open(BytesIO(base64.b64decode(data['image'])))
-    image = np.asarray(image)
-    image = img_preprocess(image)
-    image = np.array([image])
-    # steering_angle = (float(model.predict(image)) + float(model2.predict(image)))/2
-    steering_angle = float(model.predict(image))
+    steering_angle = float(model.predict(image,verbose = 0))
     throttle = 1.0 - speed / speed_limit
-    print('{} {} {}'.format(steering_angle, throttle, speed))
-    send_control(steering_angle,throttle)
-    # Debug : Count()
-    # send_control(0,1)
+    # print('{} {} {}'.format(steering_angle, throttle - abs(steering_angle), speed))
+    send_control(steering_angle,throttle - abs(steering_angle*1.5))
+
 
 @sio.on('connect')
 def connect(sid,myenviroment):
     print('Connected')
-    send_control(0,0)
+    # send_control(0,0)
 
 def send_control(steering_angle,throttle):
     sio.emit('steer',data={
@@ -100,7 +101,9 @@ def send_control(steering_angle,throttle):
 # def connect()
 #     print('connected')
 if __name__ == '__main__':
-    model = load_model('MD A1A2 1 hour model1.h5')
+    # model = load_model('Model 2 A1A2 (Amazing in 1 and 2 but possible accident on right turn 10 Epochs).h5')
+    # model = load_model("Model 5 Gucci for 2.h5")
+    model = load_model("Model 4 A1A2 acceptable (will be used in case there is nothing better).h5")
     app = socketio.Middleware(sio,app)
     eventlet.wsgi.server(eventlet.listen(("",4567)),app)
     counter = 0
