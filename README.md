@@ -8,7 +8,7 @@ The car is equipped with a camera that is used to collect data for the neural ne
 
 The neural network is trained using a dataset of images and steering angles. The dataset was collected by driving the car around a track manually in the Udacity Car Simulator. The neural network is trained using a technique called supervised learning. In supervised learning, the neural network is given a set of input data (images) and output data (steering angles). The neural network then learns to map the input data to the output data.
 
-Once the neural network is trained, it can be used to control the car. The car can be driven autonomously around the track using the joystick.
+Once the neural network is trained, it can be used to control the car. The car can be driven autonomously around the track.
 
 
 The self driving car has the following features:
